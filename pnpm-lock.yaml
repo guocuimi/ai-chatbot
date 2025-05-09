@@ -252,9 +252,6 @@ importers:
       eslint-plugin-tailwindcss:
         specifier: ^3.17.5
         version: 3.18.0(tailwindcss@4.1.5)
-      postcss:
-        specifier: ^8
-        version: 8.5.3
       tailwindcss:
         specifier: ^4.1.5
         version: 4.1.5
