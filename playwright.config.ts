@@ -1,23 +1,23 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test'
 
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-import { config } from 'dotenv';
+import { config } from 'dotenv'
 
 config({
-  path: '.env.local',
-});
+  path: '.env.local'
+})
 
 /* Use process.env.PORT by default and fallback to port 3000 */
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000
 
 /**
  * Set webServer.url and use.baseURL with the location
  * of the WebServer respecting the correct set port
  */
-const baseURL = `http://localhost:${PORT}`;
+const baseURL = `http://localhost:${PORT}`
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -40,13 +40,13 @@ export default defineConfig({
     baseURL,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'retain-on-failure',
+    trace: 'retain-on-failure'
   },
 
   /* Configure global timeout for each test */
   timeout: 120 * 1000, // 120 seconds
   expect: {
-    timeout: 120 * 1000,
+    timeout: 120 * 1000
   },
 
   /* Configure projects */
@@ -55,16 +55,16 @@ export default defineConfig({
       name: 'e2e',
       testMatch: /e2e\/.*.test.ts/,
       use: {
-        ...devices['Desktop Chrome'],
-      },
+        ...devices['Desktop Chrome']
+      }
     },
     {
       name: 'routes',
       testMatch: /routes\/.*.test.ts/,
       use: {
-        ...devices['Desktop Chrome'],
-      },
-    },
+        ...devices['Desktop Chrome']
+      }
+    }
 
     // {
     //   name: 'firefox',
@@ -102,6 +102,6 @@ export default defineConfig({
     command: 'pnpm dev',
     url: `${baseURL}/ping`,
     timeout: 120 * 1000,
-    reuseExistingServer: !process.env.CI,
-  },
-});
+    reuseExistingServer: !process.env.CI
+  }
+})
