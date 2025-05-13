@@ -1,23 +1,13 @@
-import type { InferSelectModel } from 'drizzle-orm';
-import {
-  pgTable,
-  varchar,
-  timestamp,
-  json,
-  uuid,
-  text,
-  primaryKey,
-  foreignKey,
-  boolean,
-} from 'drizzle-orm/pg-core';
+import type { InferSelectModel } from 'drizzle-orm'
+import { boolean, foreignKey, json, pgTable, primaryKey, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 
 export const user = pgTable('User', {
   id: uuid('id').primaryKey().notNull().defaultRandom(),
   email: varchar('email', { length: 64 }).notNull(),
-  password: varchar('password', { length: 64 }),
-});
+  password: varchar('password', { length: 64 })
+})
 
-export type User = InferSelectModel<typeof user>;
+export type User = InferSelectModel<typeof user>
 
 export const chat = pgTable('Chat', {
   id: uuid('id').primaryKey().notNull().defaultRandom(),
@@ -28,10 +18,10 @@ export const chat = pgTable('Chat', {
     .references(() => user.id),
   visibility: varchar('visibility', { enum: ['public', 'private'] })
     .notNull()
-    .default('private'),
-});
+    .default('private')
+})
 
-export type Chat = InferSelectModel<typeof chat>;
+export type Chat = InferSelectModel<typeof chat>
 
 // DEPRECATED: The following schema is deprecated and will be removed in the future.
 // Read the migration guide at https://github.com/vercel/ai-chatbot/blob/main/docs/04-migrate-to-parts.md
@@ -42,10 +32,10 @@ export const messageDeprecated = pgTable('Message', {
     .references(() => chat.id),
   role: varchar('role').notNull(),
   content: json('content').notNull(),
-  createdAt: timestamp('createdAt').notNull(),
-});
+  createdAt: timestamp('createdAt').notNull()
+})
 
-export type MessageDeprecated = InferSelectModel<typeof messageDeprecated>;
+export type MessageDeprecated = InferSelectModel<typeof messageDeprecated>
 
 export const message = pgTable('Message_v2', {
   id: uuid('id').primaryKey().notNull().defaultRandom(),
@@ -55,10 +45,10 @@ export const message = pgTable('Message_v2', {
   role: varchar('role').notNull(),
   parts: json('parts').notNull(),
   attachments: json('attachments').notNull(),
-  createdAt: timestamp('createdAt').notNull(),
-});
+  createdAt: timestamp('createdAt').notNull()
+})
 
-export type DBMessage = InferSelectModel<typeof message>;
+export type DBMessage = InferSelectModel<typeof message>
 
 // DEPRECATED: The following schema is deprecated and will be removed in the future.
 // Read the migration guide at https://github.com/vercel/ai-chatbot/blob/main/docs/04-migrate-to-parts.md
@@ -71,16 +61,16 @@ export const voteDeprecated = pgTable(
     messageId: uuid('messageId')
       .notNull()
       .references(() => messageDeprecated.id),
-    isUpvoted: boolean('isUpvoted').notNull(),
+    isUpvoted: boolean('isUpvoted').notNull()
   },
-  (table) => {
+  table => {
     return {
-      pk: primaryKey({ columns: [table.chatId, table.messageId] }),
-    };
-  },
-);
+      pk: primaryKey({ columns: [table.chatId, table.messageId] })
+    }
+  }
+)
 
-export type VoteDeprecated = InferSelectModel<typeof voteDeprecated>;
+export type VoteDeprecated = InferSelectModel<typeof voteDeprecated>
 
 export const vote = pgTable(
   'Vote_v2',
@@ -91,16 +81,16 @@ export const vote = pgTable(
     messageId: uuid('messageId')
       .notNull()
       .references(() => message.id),
-    isUpvoted: boolean('isUpvoted').notNull(),
+    isUpvoted: boolean('isUpvoted').notNull()
   },
-  (table) => {
+  table => {
     return {
-      pk: primaryKey({ columns: [table.chatId, table.messageId] }),
-    };
-  },
-);
+      pk: primaryKey({ columns: [table.chatId, table.messageId] })
+    }
+  }
+)
 
-export type Vote = InferSelectModel<typeof vote>;
+export type Vote = InferSelectModel<typeof vote>
 
 export const document = pgTable(
   'Document',
@@ -114,16 +104,16 @@ export const document = pgTable(
       .default('text'),
     userId: uuid('userId')
       .notNull()
-      .references(() => user.id),
+      .references(() => user.id)
   },
-  (table) => {
+  table => {
     return {
-      pk: primaryKey({ columns: [table.id, table.createdAt] }),
-    };
-  },
-);
+      pk: primaryKey({ columns: [table.id, table.createdAt] })
+    }
+  }
+)
 
-export type Document = InferSelectModel<typeof document>;
+export type Document = InferSelectModel<typeof document>
 
 export const suggestion = pgTable(
   'Suggestion',
@@ -138,33 +128,33 @@ export const suggestion = pgTable(
     userId: uuid('userId')
       .notNull()
       .references(() => user.id),
-    createdAt: timestamp('createdAt').notNull(),
+    createdAt: timestamp('createdAt').notNull()
   },
-  (table) => ({
+  table => ({
     pk: primaryKey({ columns: [table.id] }),
     documentRef: foreignKey({
       columns: [table.documentId, table.documentCreatedAt],
-      foreignColumns: [document.id, document.createdAt],
-    }),
-  }),
-);
+      foreignColumns: [document.id, document.createdAt]
+    })
+  })
+)
 
-export type Suggestion = InferSelectModel<typeof suggestion>;
+export type Suggestion = InferSelectModel<typeof suggestion>
 
 export const stream = pgTable(
   'Stream',
   {
     id: uuid('id').notNull().defaultRandom(),
     chatId: uuid('chatId').notNull(),
-    createdAt: timestamp('createdAt').notNull(),
+    createdAt: timestamp('createdAt').notNull()
   },
-  (table) => ({
+  table => ({
     pk: primaryKey({ columns: [table.id] }),
     chatRef: foreignKey({
       columns: [table.chatId],
-      foreignColumns: [chat.id],
-    }),
-  }),
-);
+      foreignColumns: [chat.id]
+    })
+  })
+)
 
-export type Stream = InferSelectModel<typeof stream>;
+export type Stream = InferSelectModel<typeof stream>

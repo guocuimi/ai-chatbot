@@ -2,15 +2,7 @@
   "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
   "files": {
     "ignoreUnknown": false,
-    "ignore": [
-      "**/pnpm-lock.yaml",
-      "lib/db/migrations",
-      "lib/editor/react-renderer.tsx",
-      "node_modules",
-      ".next",
-      "public",
-      ".vercel"
-    ]
+    "ignore": ["**/pnpm-lock.yaml", "lib/db/migrations", "lib/editor/react-renderer.tsx", "node_modules", ".next", "public", ".vercel"]
   },
   "vcs": {
     "enabled": true,

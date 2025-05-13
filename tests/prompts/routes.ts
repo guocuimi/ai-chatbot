@@ -1,4 +1,4 @@
-import { generateUUID } from '@/lib/utils';
+import { generateUUID } from '@/lib/utils'
 
 export const TEST_PROMPTS = {
   SKY: {
@@ -7,7 +7,7 @@ export const TEST_PROMPTS = {
       createdAt: new Date().toISOString(),
       role: 'user',
       content: 'Why is the sky blue?',
-      parts: [{ type: 'text', text: 'Why is the sky blue?' }],
+      parts: [{ type: 'text', text: 'Why is the sky blue?' }]
     },
     OUTPUT_STREAM: [
       '0:"It\'s "',
@@ -15,8 +15,8 @@ export const TEST_PROMPTS = {
       '0:"blue "',
       '0:"duh! "',
       'e:{"finishReason":"stop","usage":{"promptTokens":3,"completionTokens":10},"isContinued":false}',
-      'd:{"finishReason":"stop","usage":{"promptTokens":3,"completionTokens":10}}',
-    ],
+      'd:{"finishReason":"stop","usage":{"promptTokens":3,"completionTokens":10}}'
+    ]
   },
   GRASS: {
     MESSAGE: {
@@ -24,7 +24,7 @@ export const TEST_PROMPTS = {
       createdAt: new Date().toISOString(),
       role: 'user',
       content: 'Why is grass green?',
-      parts: [{ type: 'text', text: 'Why is grass green?' }],
+      parts: [{ type: 'text', text: 'Why is grass green?' }]
     },
 
     OUTPUT_STREAM: [
@@ -33,7 +33,7 @@ export const TEST_PROMPTS = {
       '0:"green "',
       '0:"duh! "',
       'e:{"finishReason":"stop","usage":{"promptTokens":3,"completionTokens":10},"isContinued":false}',
-      'd:{"finishReason":"stop","usage":{"promptTokens":3,"completionTokens":10}}',
-    ],
-  },
-};
+      'd:{"finishReason":"stop","usage":{"promptTokens":3,"completionTokens":10}}'
+    ]
+  }
+}
